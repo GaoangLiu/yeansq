@@ -239,11 +239,14 @@ class AsyncConn(event.EventedMixin):
         IOLoop.current().add_future(fut, self._connect_callback)
 
     def _connect_callback(self, fut):
-        fut.result()
-        self.state = CONNECTED
-        self.stream.write(protocol.MAGIC_V2)
-        self._start_read()
-        self.trigger(event.CONNECT, conn=self)
+        try:
+            fut.result()
+            self.state = CONNECTED
+            self.stream.write(protocol.MAGIC_V2)
+            self._start_read()
+            self.trigger(event.CONNECT, conn=self)
+        except Exception as e:
+            logger.warning(e)
 
     def _read_bytes(self, size, callback):
         try:
