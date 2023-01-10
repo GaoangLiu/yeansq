@@ -16,7 +16,7 @@ class PyTest(TestCommand):
 
 
 # also update in nsq/version.py
-version = '0.9.1'
+version = '0.0.2'
 
 
 setup(

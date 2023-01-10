@@ -41,6 +41,9 @@ class DefaultEncoder(object):
         return data
 
 
+from .tik import tik
+
+
 class AsyncConn(event.EventedMixin):
     """
     Low level object representing a TCP connection to nsqd.
@@ -121,6 +124,7 @@ class AsyncConn(event.EventedMixin):
     :param hostname: a string identifying the host where this client runs
         (default: ``<hostname>``)
     """
+
     def __init__(
             self,
             host,
@@ -246,7 +250,9 @@ class AsyncConn(event.EventedMixin):
             self._start_read()
             self.trigger(event.CONNECT, conn=self)
         except Exception as e:
-            logger.warning(e)
+            tik.tok()
+            if tik.tak():
+                logger.warning(e)
 
     def _read_bytes(self, size, callback):
         try:

@@ -25,6 +25,7 @@ from .backoff_timer import BackoffTimer
 from .client import Client
 from .conn import AsyncConn
 from . import protocol
+from .conn import tik
 
 logger = logging.getLogger(__name__)
 
@@ -142,6 +143,7 @@ class Reader(Client):
 
     :param \*\*kwargs: passed to :class:`nsq.AsyncConn` initialization
     """
+
     def __init__(
             self,
             topic,
@@ -549,8 +551,10 @@ class Reader(Client):
             del self.conns[conn.id]
 
         self.total_rdy = max(self.total_rdy - conn.rdy, 0)
-
-        logger.warning('[%s:%s] connection closed', conn.id, self.name)
+        
+        tik.tok()
+        if tik.tak():
+            logger.warning('[%s:%s] connection closed', conn.id, self.name)
 
         if (conn.rdy_timeout or conn.rdy) and \
                 (len(self.conns) == self.max_in_flight or self.backoff_timer.get_interval()):

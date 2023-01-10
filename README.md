@@ -1,12 +1,10 @@
 ## pynsq
 
-[![Build Status](https://github.com/nsqio/pynsq/workflows/tests/badge.svg)](https://github.com/nsqio/pynsq/actions) [![GitHub release](https://img.shields.io/github/release/nsqio/pynsq.svg)](https://github.com/nsqio/pynsq/releases/latest) [![PyPI](https://img.shields.io/pypi/v/pynsq.svg)](https://pypi.org/project/pynsq)
-
-The official Python client library for [NSQ][nsq].
+Copied and revised from the official Python client library for [NSQ][https://pypi.org/project/pynsq].
 
 ### Installation
 
-    $ pip install pynsq
+    $ pip3 install git+https://github.com/GaoangLiu/yeansq.git@master
 
 ### Docs
 
